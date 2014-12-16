@@ -3,25 +3,29 @@
 
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="styles.css">
+<link rel="stylesheet" type="text/css" href="/static/styles.css">
 
 </head>
 <body>
 
-<svg width="500" height="500">
-    <g transform="translate(250,250)">
-    <defs>
-        <pattern id="cat" patternUnits="userSpaceOnUse" x="250" y="250" width="500" height="500">
-            <image xlink:href="cat.jpg" x="0" y="0" width="500" height="500" />
-        </pattern>
-    </defs>
-    </g>
-</svg>
-
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 
-<script src="draw.js" ></script>
+<script src="/static/draw.js" ></script>
+<script>
+    draw_rose('2014-09-3');
+    draw_rose('2014-09-10');
+    draw_rose('2014-09-17');
+    draw_rose('2014-09-24');
+    draw_rose('2014-10-1');
+    draw_rose('2014-10-8');
+    draw_rose('2014-10-15', 300,300,50);
+    draw_rose('2014-10-22', 300,300,150);
+    draw_rose('2014-10-29');
+    draw_rose('2014-11-5');
+    draw_rose('2014-11-12');
+    draw_rose('2014-11-19');
+</script>
 
 </body>
 </html>

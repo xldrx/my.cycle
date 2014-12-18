@@ -1,4 +1,5 @@
-function draw_rose(date, width, height, radius) {
+function draw_rose(start_date, width, height, radius) {
+    //start_date = date(start_date);
     width = typeof width !== 'undefined' ? width : 300;
     height = typeof height !== 'undefined' ? height : 300;
     radius = typeof radius !== 'undefined' ? radius : 100;
@@ -13,9 +14,17 @@ function draw_rose(date, width, height, radius) {
 
     var tip = d3.tip()
         .attr('class', 'd3-tip')
-        .offset([0, 0])
+        .direction('s')
+        //.offset([0, 0])
         .html(function (d) {
-            return "<img src='" + d.data.img_addr + "' height=100px weight=100px/>"
+            var tip_src = "";
+            if (d.data.img != ''){
+                tip_src+="<img src='" + d.data.img_addr + "' height=400px weight=400px/>"
+            }
+            tip_src+="<br/>"+ d.data.acctual_date;
+            tip_src+="<br/><b>Awesome: </b>"+ d.data.awesomeness;
+            tip_src+="<br/><b>Activity: </b>"+ d.data.activity;
+            return tip_src;
         });
 
     var arc = d3.svg.arc()
@@ -29,21 +38,23 @@ function draw_rose(date, width, height, radius) {
         .outerRadius(radius);
 
 
-    var svg = d3.select("body").append("svg")
+    var svg = d3.select("#timeline").append("svg")
         .attr("width", width)
         .attr("height", height)
+        .attr('class','child')
         .append("g")
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
 
     svg.call(tip);
 
-    d3.csv('/data/' + date, function (error, data) {
+    d3.csv('/data/' + start_date, function (error, data) {
 
         data.forEach(function (d) {
             d.id = d.date;
-            d.img = d.img;
-            d.img_addr = "static/imgs/" + d.img;
+            d.acctual_date = d.date;
+            //d.img = d.img;
+            d.img_addr = "/static/imgs/" + d.img;
             d.inter = d.awesomeness;
             d.intra = d.activity;
         });
@@ -72,7 +83,7 @@ function draw_rose(date, width, height, radius) {
             })
             .attr("class", "solidArc")
             .attr("stroke", "white")
-            .attr("stroke-width", "3")
+            .attr("stroke-width", "1")
             .attr("d", arc)
             .on('mouseover', tip.show)
             .on('mouseout', tip.hide);
@@ -82,6 +93,7 @@ function draw_rose(date, width, height, radius) {
             .enter().append("path")
             .attr("fill", "none")
             .attr("stroke", "gray")
+            .attr("stroke-width", "1")
             .attr("class", "outlineArc")
             .attr("d", outlineArc);
 

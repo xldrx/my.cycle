@@ -13,7 +13,8 @@ def get_data(year, month, day):
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    records = data_analyser.get_records("2014-09-22", "2014-11-17")
+    return render_template("index.html", records=records)
 
 
 if __name__ == '__main__':

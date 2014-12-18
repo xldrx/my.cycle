@@ -62,3 +62,10 @@ body {
   top: 100%;
   left: 0;
 }
+
+.parent {display: table;}
+
+.child {
+    display: table-cell;
+    vertical-align: middle;
+}

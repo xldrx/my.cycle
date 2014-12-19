@@ -19,7 +19,7 @@ function draw_rose(start_date, width, height, radius) {
         .html(function (d) {
             var tip_src = "";
             if (d.data.img != ''){
-                tip_src+="<img src='" + d.data.img_addr + "' height=400px weight=400px/>"
+                tip_src+="<img src='" + d.data.img_addr + "' height=200px weight=200px/>"
             }
             tip_src+="<br/>"+ d.data.acctual_date;
             tip_src+="<br/><b>Awesome: </b>"+ d.data.awesomeness;
@@ -82,7 +82,7 @@ function draw_rose(start_date, width, height, radius) {
                 return "url(#" + d.data.img + ")";
             })
             .attr("class", "solidArc")
-            .attr("stroke", "white")
+            .attr("stroke", "gray")
             .attr("stroke-width", "1")
             .attr("d", arc)
             .on('mouseover', tip.show)

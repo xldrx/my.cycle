@@ -4,21 +4,113 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="/static/styles.css">
-
-</head>
-<body>
-
-<div class="parent" id="timeline"></div>
-
+<style>
+body {
+    background-color: black;
+}
+h{
+    font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
+    font-size: 50px;
+    color: white;
+    position: absolute;
+    left: 100px;
+    top: 50px;
+}
+p{
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    left: 100px;
+    top: 100px;
+}
+#time{
+    font-size: 15px;
+    position: absolute;
+    left: 100px;
+    top: 160px;
+{#    background-color:#8B0000;#}
+{#    color: white;#}
+}
+#size{
+    font-size: 15px;
+    position: absolute;
+    left: 160px;
+    top: 160px;
+    background-color: rgb(202, 60, 60);
+{#    color: white;#}
+}
+</style>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/base-min.css">
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/buttons-min.css">
 
 <script src="/static/draw.js" ></script>
+</head>
+<body>
+
+<div style="height: 200px">
+<h>MyCycle</h>
+<p>Arrange my cycles according to:</p>
+<button id="time" onclick="time2()" class="pure-button pure-button-primary" >Time</button>
+<button id="size" onclick="size2()" class="pure-button pure-button-primary" >Size</button>
+</div>
+<br/>
+<div class="parent" id="timeline"></div>
+
 <script>
+
+    function time2() {
+        $('#timeline').empty();
+        {% for row in records %}
+            draw_rose("{{ row.date  }}", {{ row.width or 300 }}, {{ row.height or 300 }}, {{ row.radius  }});
+        {% endfor %}
+    }
+
+    function size2() {
+        $('#timeline').empty();
+        {% for row in size_records %}
+            draw_rose("{{ row.date  }}", {{ row.width or 300 }}, {{ row.height or 300 }}, {{ row.radius  }});
+        {% endfor %}
+    }
+
+
+
+    var layout = '';
+    var countTime = 0;
+    var countSize = 0;
+   
+    function time(){
+        layout += '<h>MyCycle</h>';
+        layout += '<p>Arrange my cycles according to:</p>';
+        layout += '<button id="time" onclick="time()">Time</button>';
+        layout += '<button id="size" onclick="size()">Size</button>';
+        layout += '<div class="parent" id="timeline"></div>';
+        document.body.innerHTML = layout;
+		{% for row in records %}
+            countTime += 300;
+		    draw_rose("{{ row.date  }}", countTime, countTime, {{ row.radius  }});
+		{% endfor %}      
+    }
+
+    function size(){
+        layout += '<h>MyCycle</h>';
+        layout += '<p>Arrange my cycles according to:</p>';
+        layout += '<button id="time" onclick="time()">Time</button>';
+        layout += '<button id="size" onclick="size()">Size</button>';
+        layout += '<div class="parent" id="timeline"></div>';
+        document.body.innerHTML = layout;
+		{% for row in records %}
+            countSize += 300;      
+		    draw_rose("{{ row.date  }}", countSize, countSize, {{ row.radius  }});
+		{% endfor %}        
+    }
+
     {% for row in records %}
         draw_rose("{{ row.date  }}", {{ row.width or 300 }}, {{ row.height or 300 }}, {{ row.radius  }});
     {% endfor %}
+
 </script>
 
 

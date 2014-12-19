@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from interface import data_analyser
+import data_analyser
 
 app = Flask(__name__)
 
@@ -14,7 +14,8 @@ def get_data(year, month, day):
 @app.route('/')
 def index():
     records = data_analyser.get_records("2014-09-22", "2014-11-17")
-    return render_template("index.html", records=records)
+    size_records = sorted(records, key=lambda row: row['radius'], reverse=True)
+    return render_template("index.html", records=records, size_records=size_records)
 
 
 if __name__ == '__main__':
